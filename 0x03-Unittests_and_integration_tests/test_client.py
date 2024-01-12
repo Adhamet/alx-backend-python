@@ -10,7 +10,7 @@ from unittest.mock import patch, PropertyMock, Mock
 
 
 class TestGithubOrgClient(unittest.TestCase):
-    """ Class for testing github org client """
+    """ Class for Testing Github Org Client """
 
     @parameterized.expand([
         ('google'),
@@ -18,14 +18,15 @@ class TestGithubOrgClient(unittest.TestCase):
     ])
     @patch('client.get_json')
     def test_org(self, input, mock):
-        """ Test that GithubOrgClient.org returns the expected value """
+        """Test that GithubOrgClient.org returns the correct value"""
         test_class = GithubOrgClient(input)
         test_class.org()
         mock.assert_called_once_with(f'https://api.github.com/orgs/{input}')
 
     def test_public_repos_url(self):
-        """ Test that the result of _public_repos_url is the expected
-        one based on the mocked payload """
+        """ Test that the result of _public_repos_url is the expected one
+        based on the mocked payload
+        """
         with patch('client.GithubOrgClient.org',
                    new_callable=PropertyMock) as mock:
             payload = {"repos_url": "World"}
@@ -36,9 +37,10 @@ class TestGithubOrgClient(unittest.TestCase):
 
     @patch('client.get_json')
     def test_public_repos(self, mock_json):
-        """ Test the list of repos to the expected of chosen payload
-        Test that the mocked property and the mocked
-        get_json was called once."""
+        """
+        Test that the list of repos is what you expect from the chosen payload.
+        Test that the mocked property and the mocked get_json was called once.
+        """
         json_payload = [{"name": "Google"}, {"name": "Twitter"}]
         mock_json.return_value = json_payload
 
